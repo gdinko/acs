@@ -50,11 +50,14 @@ ACS_API_TIMEOUT= #default=5
  * You can call all methods from the API like this , there is no need 
  * to pass company data every time. The data is injected automaticaly 
  * on every request
- * 
  **/
 
+dd(Acs::ACS_Address_Validation([
+    'Address' => 'Address ...'
+]));
+
 dd(Acs::ACS_Trackingsummary([
-    'Voucher_No' => '3168874984'
+    'Voucher_No' => '999999999'
 ]));
 ```
 
