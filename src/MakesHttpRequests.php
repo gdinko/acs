@@ -25,7 +25,7 @@ trait MakesHttpRequests
     public function request($verb, $uri, $data = [])
     {
         $response = Http::withHeaders([
-            'AcsApiKey' => $this->getApiKey()
+            'AcsApiKey' => $this->getApiKey(),
         ])
             ->timeout($this->timeout)
             ->baseUrl($this->baseUrl)

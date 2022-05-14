@@ -82,7 +82,7 @@ class Acs
             'Company_Password' => config('acs.company-password'),
             'User_ID' => config('acs.user-id'),
             'User_Password' => config('acs.user-password'),
-            'Billing_Code' => config('acs.billing-code')
+            'Billing_Code' => config('acs.billing-code'),
         ];
     }
 
@@ -120,7 +120,7 @@ class Acs
     /**
      * setTimeout
      *
-     * @param  integer $timeout
+     * @param  int $timeout
      * @return void
      */
     public function setTimeout(int $timeout): void

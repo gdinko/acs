@@ -3,7 +3,7 @@
 namespace Gdinko\Acs\Actions;
 
 trait ManagesHelp
-{    
+{
     /**
      * help
      *

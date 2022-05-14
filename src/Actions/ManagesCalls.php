@@ -4,7 +4,6 @@ namespace Gdinko\Acs\Actions;
 
 trait ManagesCalls
 {
-
     public function __call($name, $arguments)
     {
         return $this->post(
@@ -14,7 +13,7 @@ trait ManagesCalls
                 'ACSInputParameters' => array_merge(
                     $arguments[0] ?? [],
                     $this->getCompanyData()
-                )
+                ),
             ]
         );
     }
