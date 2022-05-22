@@ -33,7 +33,7 @@ class AcsServiceProvider extends ServiceProvider
 
             // Registering package commands.
             $this->commands([
-                GetCarrierAcsApiStatus::class
+                GetCarrierAcsApiStatus::class,
             ]);
         }
     }
