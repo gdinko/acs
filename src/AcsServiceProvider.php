@@ -2,6 +2,7 @@
 
 namespace Gdinko\Acs;
 
+use Gdinko\Acs\Commands\GetCarrierAcsApiStatus;
 use Illuminate\Support\ServiceProvider;
 
 class AcsServiceProvider extends ServiceProvider
@@ -11,10 +12,29 @@ class AcsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/acs.php' => config_path('acs.php'),
-            ], 'config');
+            ], 'acs-config');
+
+            $this->publishes([
+                __DIR__ . '/../database/migrations/' => database_path('migrations'),
+            ], 'acs-migrations');
+
+            $this->publishes([
+                __DIR__ . '/Models/' => app_path('Models'),
+            ], 'acs-models');
+
+            $this->publishes([
+                __DIR__ . '/Commands/' => app_path('Console/Commands'),
+            ], 'acs-commands');
+
+            // Registering package commands.
+            $this->commands([
+                GetCarrierAcsApiStatus::class
+            ]);
         }
     }
 

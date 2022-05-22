@@ -36,15 +36,15 @@ class Acs
 
         $this->setCompanyData();
 
-        $this->configBaseUri();
+        $this->configBaseUrl();
     }
 
     /**
-     * configBaseUri
+     * configBaseUrl
      *
      * @return void
      */
-    public function configBaseUri(): void
+    public function configBaseUrl(): void
     {
         $this->baseUrl = config('acs.base-url');
     }
