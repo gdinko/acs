@@ -51,7 +51,7 @@ class GetCarrierAcsApiStatus extends Command
 
             $contentTypes = Acs::ACS_Get_Content_Types();
 
-            if (!empty($contentTypes['ACSOutputResponce']['ACSTableOutput']['Table_Data'])) {
+            if (! empty($contentTypes['ACSOutputResponce']['ACSTableOutput']['Table_Data'])) {
                 CarrierAcsApiStatus::create([
                     'code' => self::API_STATUS_OK,
                 ]);
