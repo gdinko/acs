@@ -5,7 +5,6 @@ namespace Gdinko\Acs\Commands;
 use Gdinko\Acs\Events\CarrierAcsTrackingEvent;
 use Gdinko\Acs\Exceptions\AcsImportValidationException;
 use Gdinko\Acs\Facades\Acs;
-use Gdinko\Acs\Hydrators\Request;
 use Gdinko\Acs\Models\CarrierAcsTracking;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
@@ -120,8 +119,7 @@ abstract class TrackCarrierAcsBase extends Command
 
         $bar->start();
 
-        if (!empty($this->parcels)) {
-
+        if (! empty($this->parcels)) {
             foreach ($this->parcels as $parcel) {
                 $trackingInfo = Acs::ACS_Trackingsummary(
                     $this->prepareParcelRequest($parcel)
@@ -131,7 +129,7 @@ abstract class TrackCarrierAcsBase extends Command
                     $this->prepareParcelRequest($parcel)
                 )['ACSOutputResponce']['ACSTableOutput']['Table_Data'] ?? [];
 
-                if (!empty($trackingInfo)) {
+                if (! empty($trackingInfo)) {
                     $this->processTracking($trackingInfo);
                 }
 
@@ -142,7 +140,6 @@ abstract class TrackCarrierAcsBase extends Command
         $bar->finish();
     }
 
-
     /**
      * prepareParcelRequest
      *
@@ -152,7 +149,7 @@ abstract class TrackCarrierAcsBase extends Command
     protected function prepareParcelRequest(string $parcel): array
     {
         return [
-            'Voucher_No' => $parcel
+            'Voucher_No' => $parcel,
         ];
     }
 
@@ -175,7 +172,7 @@ abstract class TrackCarrierAcsBase extends Command
             ]
         );
 
-        if (!$this->muteEvents) {
+        if (! $this->muteEvents) {
             CarrierAcsTrackingEvent::dispatch(
                 array_pop($trackingInfo['operations']),
                 Acs::getUserName()
