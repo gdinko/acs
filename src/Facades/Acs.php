@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static array ACS_Trackingsummary(array $arguments)
  * @method static array ACS_TrackingDetails(array $arguments)
- * @method static array ACS_Get_Content_Types(array $arguments)
+ * @method static array ACS_Get_Content_Types()
  *
  * @see \Gdinko\Acs\Acs
  */
