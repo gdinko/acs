@@ -14,14 +14,20 @@ class CarrierAcsTrackingEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $tracking;
+
+    public $account;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(array $tracking, string $account)
     {
-        //
+        $this->tracking = $tracking;
+
+        $this->account = $account;
     }
 
     /**

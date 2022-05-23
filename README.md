@@ -5,7 +5,6 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/gdinko/acs/Check%20&%20fix%20styling?label=code%20style)](https://github.com/gdinko/acs/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/gdinko/acs.svg?style=flat-square)](https://packagist.org/packages/gdinko/acs)
 
-
 [ACS JSON API Documentation](https://acscourier-media.azureedge.net/production-media/1leezfnu/new_acs_web_services-english.pdf?v=1)
 
 [ACS JSON API Swagger UI](https://webservices.acscourier.net/ACSRestServices/swagger/ui/index)
@@ -27,7 +26,25 @@ php artisan migrate
 If you need to export configuration file:
 
 ```bash
-php artisan vendor:publish --provider="gdinko\acs\AcsServiceProvider" --tag=config
+php artisan vendor:publish --tag=acs-config
+```
+
+If you need to export migrations:
+
+```bash
+php artisan vendor:publish --tag=acs-migrations
+```
+
+If you need to export models:
+
+```bash
+php artisan vendor:publish --tag=acs-models
+```
+
+If you need to export commands:
+
+```bash
+php artisan vendor:publish --tag=acs-commands
 ```
 
 ## Configuration
@@ -45,10 +62,16 @@ ACS_API_TIMEOUT= #default=5
 
 ## Usage
 
+Runtime Setup
+
 ```php
-/** 
- * You can call all methods from the API like this , there is no need 
- * to pass company data every time. The data is injected automaticaly 
+Acs::setTimeout(99);
+```
+
+```php
+/**
+ * You can call all methods from the API like this , there is no need
+ * to pass company data every time. The data is injected automaticaly
  * on every request
  **/
 
@@ -59,6 +82,68 @@ dd(Acs::ACS_Address_Validation([
 dd(Acs::ACS_Trackingsummary([
     'Voucher_No' => '999999999'
 ]));
+```
+
+Commands
+
+```bash
+
+#get acs api status (use -h to view options)
+php artisan acs:api-status
+
+#track parcels (use -h to view options)
+php artisan acs:track
+```
+
+Models
+
+```php
+CarrierAcsTracking
+CarrierAcsApiStatus
+```
+
+Events
+
+```php
+CarrierAcsTrackingEvent
+```
+
+## Parcels Tracking
+
+1. Subscribe to tracking event, you will recieve last tracking info, if tracking command is schduled
+
+```php
+Event::listen(function (CarrierAcsTrackingEvent $event) {
+    echo $event->account;
+    dd($event->tracking);
+});
+```
+
+2. Before use of tracking command you need to create your own command and define setUp method
+
+```bash
+php artisan make:command TrackCarrierAcs
+```
+
+3. In app/Console/Commands/TrackCarrierAcs define your logic for parcels to be tracked
+
+```php
+use Gdinko\Acs\Commands\TrackCarrierAcsBase;
+
+class TrackCarrierAcsSetup extends TrackCarrierAcsBase
+{
+    protected function setup()
+    {
+        //define parcel selection logic here
+        // $this->parcels = [];
+    }
+}
+```
+
+4. Use the command
+
+```bash
+php artisan acs:track
 ```
 
 ### Testing
@@ -82,6 +167,7 @@ If you discover any security related issues, please email dinko359@gmail.com ins
 ## Credits
 
 -   [Dinko Georgiev](https://github.com/gdinko)
+-   [silabg.com](https://www.silabg.com/) :heart:
 -   [All Contributors](../../contributors)
 
 ## License

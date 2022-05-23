@@ -8,6 +8,8 @@ class Acs
     use Actions\ManagesCalls;
     use Actions\ManagesHelp;
 
+    public const SIGNATURE = 'CARRIER_ACS';
+
     /**
      * Acs API Key
      */
@@ -94,6 +96,36 @@ class Acs
     public function getCompanyData(): array
     {
         return $this->companyData;
+    }
+
+    /**
+     * getUserName
+     *
+     * @return string
+     */
+    public function getUserName(): string
+    {
+        return $this->getCompanyData()['User_ID'] ?? null;
+    }
+
+    /**
+     * getPassword
+     *
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->getCompanyData()['User_Password'] ?? null;
+    }
+
+    /**
+     * getSignature
+     *
+     * @return string
+     */
+    public function getSignature(): string
+    {
+        return self::SIGNATURE;
     }
 
     /**
